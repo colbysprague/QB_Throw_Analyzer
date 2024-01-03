@@ -193,7 +193,7 @@
             class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 rounded-sm"
         >
             <video
-                class="w-full h-auto rounded-sm"
+                class="w-full h-auto rounded-sm order-2"
                 autoplay
                 muted
                 loop
@@ -203,7 +203,7 @@
                 <track kind="captions" srcLang="en" label="English" />
             </video>
             {#if loading}
-                <section class="card w-full">
+                <section class="card w-full order-1">
                     <ProgressBar />
 
                     <div class="card-header flex justify-between items-center">
