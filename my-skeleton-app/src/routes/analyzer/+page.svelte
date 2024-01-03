@@ -32,6 +32,7 @@
 
         const formData = new FormData();
         formData.append("video", file);
+        formData.append("height", height);
 
         try {
             const response = await fetch(
@@ -61,6 +62,11 @@
         }
     }
 
+    function heightToCm(feet, inches) {
+        const cm = feet * 30.48 + inches * 2.54;
+        return cm;
+    }
+
     let validFeet = false;
     let validInches = false;
     let validHeight = false;
@@ -68,6 +74,7 @@
     $: validFeet = feet !== undefined && feet >= 3 && feet <= 9;
     $: validInches = inches !== undefined && inches >= 0 && inches <= 11;
     $: validHeight = validFeet && validInches;
+    $: height = validHeight ? parseInt(heightToCm(feet, inches)) : null;
 </script>
 
 {#if !videoURL}

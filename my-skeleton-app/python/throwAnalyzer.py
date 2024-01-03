@@ -25,6 +25,8 @@ def process_video():
         return jsonify({'error': 'No video file provided'}), 400
 
     video_file = request.files['video']
+    height = request.form["height"]
+    print("HEIGHT", height)
 
     # Save the uploaded video file to a temporary location
     temp_dir = tempfile.gettempdir()
@@ -35,7 +37,7 @@ def process_video():
     cap = cv2.VideoCapture(temp_video_path)
     fps = int(cap.get(cv2.CAP_PROP_FPS))
 
-    detector = pm.PoseDetector()
+    detector = pm.PoseDetector(subjectHeight=int(height)) #no argument assumes 180cm
 
     data_list = []
 
