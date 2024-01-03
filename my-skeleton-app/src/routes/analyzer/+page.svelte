@@ -1,5 +1,6 @@
 <script lang="ts">
     //@ts-nocheck
+    import { goto } from "$app/navigation";
     import { FileDropzone } from "@skeletonlabs/skeleton";
     import { ProgressBar } from "@skeletonlabs/skeleton";
     import { Stepper, Step } from "@skeletonlabs/skeleton";
@@ -185,8 +186,14 @@
 {/if}
 
 {#if videoURL}
-    <div class="card card-header text-center text-xl p-4 mb-10">
-        Your Throw Results
+    <div class="card card-header p-4 mb-10 flex justify-between">
+        <p class="text-center text-xl">Your Throw Results</p>
+        <button
+            class="btn variant-ghost-secondary"
+            on:click={() => goto("/analyzer")}
+            disabled={!processedData}
+            >🏈 Analyze Another Throw
+        </button>
     </div>
     <div class="card max-h-fit">
         <div
