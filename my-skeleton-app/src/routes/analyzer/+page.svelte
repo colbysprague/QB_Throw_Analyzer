@@ -14,15 +14,6 @@
     let inches;
     let height;
 
-    $: calculateHeight(feet, inches);
-
-    function calculateHeight(feet, inches) {
-        // Convert feet and inches to centimeters
-        const heightInCm = feet * 30.48 + inches * 2.54;
-
-        return heightInCm;
-    }
-
     async function onChangeHandler(event) {
         loading = true;
         displayButton = false;
