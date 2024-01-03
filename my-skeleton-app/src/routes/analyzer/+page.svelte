@@ -177,8 +177,8 @@
 {/if}
 
 {#if videoURL}
-    <div class="card card-header p-4 mb-10 flex justify-between">
-        <p class="text-center text-xl">Your Throw Results</p>
+    <div class="card card-header p-4 mb-10 flex justify-between align-baseline">
+        <p class="text-xl">Your Throw Results</p>
         <button
             class="btn variant-ghost-secondary"
             on:click={() => goto("/analyzer")}
@@ -298,59 +298,3 @@
         </div>
     </div>
 {/if}
-
-<!-- <div class="h-full text-center flex flex-col align-center justify-center">
-    <h1 class="h1">
-        <span
-            class="bg-gradient-to-br from-blue-500 to-cyan-300 bg-clip-text text-transparent box-decoration-clone"
-            >Elevate Your Game.</span
-        >
-    </h1>
-
-    <br />
-    {#if displayButton}
-        <FileButton name="files" bind:files on:change={onChangeHandler}
-            >Upload Throw</FileButton
-        >
-    {/if}
-    {#if loading}
-        <ProgressBar />
-    {/if}
-    {#if processedData}
-        <br />
-        <div class="grid grid-cols-1 md:grid-cols-2">
-            <video
-                controls
-                width="640"
-                height="360"
-                style="border-radius: 10px"
-            >
-                <source src={videoURL} type="video/mp4" />
-                <track captions="" />
-                Your browser does not support the video tag.
-            </video>
-
-            <div class="table-container">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>On Release</th>
-                            <th>Degrees</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Elbow Angle</td>
-                            <td>{processedData.data.releaseArmAngle}</td>
-                        </tr>
-                        <tr>
-                            <td>Shoulder Tilt</td>
-                            <td>{processedData.data.shoulderTilt}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                Thank you for using QBVision!
-            </div>
-        </div>
-    {/if}
-</div> -->
