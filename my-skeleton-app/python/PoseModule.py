@@ -239,6 +239,7 @@ class PoseDetector:
 
                 self.frame_count += 1
                 self.throwData["framesDuringThrow"] = self.frame_count
+                self.throwData["releaseTime"] = round(float(self.frame_count / 30), 2) * 1.5
                 self.throwData["throwingArmAngle"].append(self.findAngle(r_shoulder, r_elbow, r_hand))
                 self.throwData["throwingLeftLegAngle"].append(self.findAngle(l_hip, l_knee, l_ankle))
                 self.throwData["throwingRightLegAngle"].append(self.findAngle(r_hip, r_knee, r_ankle))
