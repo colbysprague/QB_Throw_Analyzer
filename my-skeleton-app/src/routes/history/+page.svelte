@@ -15,9 +15,17 @@
           <AccordionItem open={false}>
             <svelte:fragment slot="lead">🏈</svelte:fragment>
             <svelte:fragment slot="summary"
-              ><span class="text-l">{throwSession.createdAt}</span
-              ></svelte:fragment
-            >
+              ><div class="flex justify-between">
+                <span class="font-bold text-xl"
+                  >{throwSession.qbName === undefined
+                    ? "No Name QB"
+                    : throwSession.qbName}</span
+                >
+                <span class="badge text-sm variant-soft-surface"
+                  >{throwSession.createdAt}</span
+                >
+              </div>
+            </svelte:fragment>
             <svelte:fragment slot="content">
               <ul class="list ml-10">
                 <li>

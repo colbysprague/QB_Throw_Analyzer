@@ -13,6 +13,7 @@
   let feet;
   let inches;
   let height;
+  let qbName;
 
   function createThrowRecord(): void {
     historyStore.update((throws) => [
@@ -23,6 +24,7 @@
         shoulderTilt: processedData.data.shoulderTilt.toString() + " °",
         releaseTime: processedData.data.releaseTime.toString() + " s",
         qbHeight: height.toString() + " cm",
+        qbName: qbName,
         createdAt: new Date().toLocaleString(),
       },
       ...throws,
@@ -77,10 +79,12 @@
   let validFeet = false;
   let validInches = false;
   let validHeight = false;
+  let validName = false;
 
   $: validFeet = feet !== undefined && feet >= 3 && feet <= 9;
   $: validInches = inches !== undefined && inches >= 0 && inches <= 11;
-  $: validHeight = validFeet && validInches;
+  $: validName = qbName && qbName.length > 0;
+  $: validHeight = validFeet && validInches && validName;
   $: height = validHeight ? parseInt(heightToCm(feet, inches)) : null;
 </script>
 
@@ -88,30 +92,30 @@
   <div class="card p-4 align-center m-0">
     <dl class="list-dl">
       <div>
-        <span class="badge bg-secondary-800 p-4">📂</span>
+        <span class="badge variant-ghost-secondary text-xl p-4">📂</span>
         <span class="flex-auto">
           <dt class="text-xl">Upload a Throw</dt>
-          <dd class="variant-soft">
+          <dd class="">
             Upload a full-body .mp4 of your throwing motion for analysis - do
             not use a slow-motion video
           </dd>
         </span>
       </div>
       <div>
-        <span class="badge bg-secondary-800 p-4">🔎</span>
+        <span class="badge variant-ghost-secondary text-xl p-4">🔎</span>
         <span class="flex-auto">
           <dt class="text-xl">Analyzer Processes Video</dt>
-          <dd class="variant-soft">
+          <dd class="">
             Our AI Powered process will extract insights from the video you
             provide
           </dd>
         </span>
       </div>
       <div>
-        <span class="badge bg-secondary-800 p-4">💡</span>
+        <span class="badge variant-ghost-secondary text-xl p-4">💡</span>
         <span class="flex-auto">
           <dt class="text-xl">Gain Insight</dt>
-          <dd class="variant-soft">
+          <dd class="">
             View valuable metrics regarding your biomechanics during your
             throwing motion
           </dd>
@@ -123,7 +127,7 @@
 
   <div class="card my-10 p-4">
     <Stepper
-      buttonComplete="variant-filled-secondary"
+      buttonComplete="variant-fighost-secondary text-xl"
       buttonCompleteLabel="Analyze"
     >
       <Step locked={!validHeight}>
@@ -142,6 +146,12 @@
         {/if}
 
         <div class="p-4">
+          <input
+            type="text"
+            placeholder="QB Name"
+            class="w-auto input text-center border border-gray-300 rounded mb-3"
+            bind:value={qbName}
+          />
           <div class="flex items-center space-x-2">
             <div class="flex items-center">
               <input
@@ -184,7 +194,7 @@
   <div class="card card-header p-4 mb-10 flex justify-between align-baseline">
     <p class="text-xl">Your Throw Results</p>
     <button
-      class="btn variant-ghost-secondary"
+      class="btn variant-gghost-secondary text-xl"
       on:click={() => location.reload()}
       disabled={!processedData}
       >🏈 Analyze Another Throw
@@ -231,7 +241,9 @@
         <div class="w-full text-token card p-4 space-y-4">
           <dl class="list-dl">
             <div>
-              <span class="badge-icon p-4 variant-soft-secondary">💪</span>
+              <span class="badge-icon p-4 variant-ghost-secondary text-xl"
+                >💪</span
+              >
               <span class="flex-auto">
                 <dt class="font-bold">Throwing Arm Angle</dt>
                 <dd class="text-sm opacity-50">
@@ -241,7 +253,9 @@
               <span class="text-xl">{processedData.data.releaseArmAngle}°</span>
             </div>
             <div>
-              <span class="badge-icon p-4 variant-soft-secondary">🏈</span>
+              <span class="badge-icon p-4 variant-ghost-secondary text-xl"
+                >🏈</span
+              >
               <span class="flex-auto">
                 <dt class="font-bold">Shoudler Tilt</dt>
                 <dd class="text-sm opacity-50">
@@ -251,7 +265,9 @@
               <span class="text-xl">{processedData.data.shoulderTilt}°</span>
             </div>
             <div>
-              <span class="badge-icon p-4 variant-soft-secondary">⏳</span>
+              <span class="badge-icon p-4 variant-ghost-secondary text-xl"
+                >⏳</span
+              >
               <span class="flex-auto">
                 <dt class="font-bold">Release Time</dt>
                 <dd class="text-sm opacity-50">
@@ -265,7 +281,9 @@
               >
             </div>
             <div>
-              <span class="badge-icon p-4 variant-soft-secondary">🪜</span>
+              <span class="badge-icon p-4 variant-ghost-secondary text-xl"
+                >🪜</span
+              >
               <span class="flex-auto">
                 <dt class="font-bold">Release Height</dt>
                 <dd class="text-sm opacity-50">

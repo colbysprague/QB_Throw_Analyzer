@@ -9,6 +9,7 @@ type Throw = {
     releaseTime: string
     releaseHeight: string
     qbHeight: string
+    qbName: string
     createdAt: string
 }
 

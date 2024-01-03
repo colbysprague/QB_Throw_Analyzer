@@ -32,6 +32,7 @@
 </Drawer>
 
 <!-- App Shell -->
+
 <AppShell slotSidebarLeft="w-0 md:w-52 bg-surface-500/10">
   <svelte:fragment slot="header">
     <!-- App Bar -->
@@ -100,6 +101,7 @@
   <div class="container p-10 mx-auto">
     <slot />
   </div>
+
   <svelte:fragment slot="pageFooter"
     ><div class="p-4 text-primary-100">
       A Colby Sprague Project
