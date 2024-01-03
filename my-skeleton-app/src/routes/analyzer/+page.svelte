@@ -1,6 +1,5 @@
 <script lang="ts">
     //@ts-nocheck
-    import { goto } from "$app/navigation";
     import { FileDropzone } from "@skeletonlabs/skeleton";
     import { ProgressBar } from "@skeletonlabs/skeleton";
     import { Stepper, Step } from "@skeletonlabs/skeleton";
@@ -181,7 +180,7 @@
         <p class="text-xl">Your Throw Results</p>
         <button
             class="btn variant-ghost-secondary"
-            on:click={() => goto("/analyzer")}
+            on:click={() => location.reload()}
             disabled={!processedData}
             >🏈 Analyze Another Throw
         </button>
