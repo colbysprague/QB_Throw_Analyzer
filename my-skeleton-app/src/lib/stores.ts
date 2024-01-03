@@ -2,11 +2,14 @@ import { localStorageStore } from "@skeletonlabs/skeleton";
 
 import type { Writable } from "svelte/store";
 
-type Note = {
+type Throw = {
     id: string,
-    content: string;
-    tags: string[],
-    createdAt: number
+    armAngle: string
+    shoudlerTilt: string
+    releaseTime: string
+    releaseHeight: string
+    qbHeight: string
+    createdAt: string
 }
 
-export const noteStore: Writable<Note[]> = localStorageStore('notes', [])
+export const historyStore: Writable<Throw[]> = localStorageStore('history', [])
