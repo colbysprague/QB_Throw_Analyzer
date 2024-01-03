@@ -194,7 +194,7 @@
   <div class="card card-header p-4 mb-10 flex justify-between align-baseline">
     <p class="text-xl">Your Throw Results</p>
     <button
-      class="btn variant-gghost-secondary text-xl"
+      class="btn variant-ghost-secondary text-xl"
       on:click={() => location.reload()}
       disabled={!processedData}
       >🏈 Analyze Another Throw
