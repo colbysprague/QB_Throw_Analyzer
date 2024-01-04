@@ -25,7 +25,7 @@
   }
 </script>
 
-<div class="card p-4 h-auto">
+<div class="card p-4 h-auto h-auto">
   <div class="card-header mb-10 flex justify-between align-baseline">
     <p class="text-xl">Your Throw History</p>
   </div>

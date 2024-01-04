@@ -133,8 +133,8 @@
       <Step locked={!validHeight}>
         <svelte:fragment slot="header">Enter Your Height</svelte:fragment>
 
-        🤓 Your height will be used to calibrate the model for metrics like exit
-        velocity
+        🤓 Your height will be used to calibrate the model for metrics like
+        releaseHeight
 
         <br />
         {#if !validHeight}
@@ -200,12 +200,13 @@
       >🏈 Analyze Another Throw
     </button>
   </div>
-  <div class="card max-h-fit">
+
+  <div class="card">
     <div
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 rounded-sm"
     >
       <video
-        class="w-full h-auto rounded-sm order-2"
+        class="w-full rounded-sm order-2 max-h-[calc(100vh-300px)]"
         autoplay
         muted
         loop
@@ -245,7 +246,9 @@
                 >💪</span
               >
               <span class="flex-auto">
-                <dt class="font-bold">Throwing Arm Angle</dt>
+                <dt class="font-bold text-lg mb-1 flex align-center">
+                  Throwing Arm Angle
+                </dt>
                 <dd class="text-sm opacity-50">
                   Elbow angle upon release of the ball
                 </dd>
@@ -257,7 +260,9 @@
                 >🏈</span
               >
               <span class="flex-auto">
-                <dt class="font-bold">Shoudler Tilt</dt>
+                <dt class="font-bold text-lg mb-1 flex align-center">
+                  Shoudler Tilt
+                </dt>
                 <dd class="text-sm opacity-50">
                   Measure of shoulders parallel to ground upon release
                 </dd>
@@ -269,7 +274,9 @@
                 >⏳</span
               >
               <span class="flex-auto">
-                <dt class="font-bold">Release Time</dt>
+                <dt class="font-bold text-lg mb-1 flex align-center">
+                  Release Time
+                </dt>
                 <dd class="text-sm opacity-50">
                   Total time elapsed during throwing motion until release
                 </dd>
@@ -285,16 +292,21 @@
                 >🪜</span
               >
               <span class="flex-auto">
-                <dt class="font-bold">Release Height</dt>
+                <dt class="font-bold text-lg mb-1 flex align-center">
+                  Release Height <span
+                    class="badge variant-soft-tertiary text-xs ml-1"
+                    >Experimental</span
+                  >
+                </dt>
                 <dd class="text-sm opacity-50">
                   Height when football is released
                 </dd>
               </span>
-              <span class="text-xl"
-                >{processedData.data.releaseHeight}<span class="text-sm">
-                  cm</span
-                ></span
-              >
+              <span class="text-xl">
+                {processedData.data.releaseHeight}<span class="text-sm">
+                  cm
+                </span>
+              </span>
             </div>
           </dl>
         </div>
