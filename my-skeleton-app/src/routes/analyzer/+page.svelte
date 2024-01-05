@@ -1,36 +1,53 @@
 <script lang="ts">
   //@ts-nocheck
-  import { FileDropzone } from "@skeletonlabs/skeleton";
+  import { Avatar, FileDropzone } from "@skeletonlabs/skeleton";
   import { ProgressBar } from "@skeletonlabs/skeleton";
   import { Stepper, Step } from "@skeletonlabs/skeleton";
   import { historyStore } from "$lib/stores";
+  import { athletes } from "$lib/stores";
+  import { Autocomplete } from "@skeletonlabs/skeleton";
 
   let files: FileList;
   let loading: boolean = false;
   let displayButton: boolean = true;
   let processedData;
   let videoURL;
-  let feet;
-  let inches;
-  let height;
-  let qbName;
 
-  function createThrowRecord(): void {
-    historyStore.update((throws) => [
-      {
-        id: crypto.randomUUID(),
-        armAngle: processedData.data.releaseArmAngle.toString() + " °",
-        releaseHeight: processedData.data.releaseHeight.toString() + " cm",
-        shoulderTilt: processedData.data.shoulderTilt.toString() + " °",
-        releaseTime: processedData.data.releaseTime.toString() + " s",
-        qbHeight: height.toString() + " cm",
-        qbName: qbName,
-        createdAt: new Date().toLocaleString(),
-      },
-      ...throws,
-    ]);
+  let athleteHeight;
+  $: athleteHeight = currentAthlete
+    ? parseInt(
+        heightToCm(
+          parseInt(currentAthlete.heightFeet),
+          parseInt(currentAthlete.heightInches),
+        ),
+      )
+    : null;
 
-    console.log("Updated Throw History");
+  function createThrowRecord(currentAthlete: Object): void {
+    console.log(
+      "Updating record for Athlete: ",
+      currentAthlete.firstName,
+      currentAthlete.lastName,
+    );
+
+    const throwRecord = {
+      id: crypto.randomUUID(),
+      armAngle: processedData.data.releaseArmAngle.toString() + " °",
+      releaseHeight: processedData.data.releaseHeight.toString() + " cm",
+      shoulderTilt: processedData.data.shoulderTilt.toString() + " °",
+      releaseTime: processedData.data.releaseTime.toString() + " s",
+      createdAt: new Date().toLocaleString(),
+    };
+
+    const athleteIdToUpdate = currentAthlete.id;
+
+    athletes.update((allAthletes) =>
+      allAthletes.map((athlete) =>
+        athlete.id === athleteIdToUpdate
+          ? { ...athlete, throws: [...athlete.throws, throwRecord] }
+          : athlete,
+      ),
+    );
   }
 
   async function onChangeHandler(event) {
@@ -43,7 +60,7 @@
 
     const formData = new FormData();
     formData.append("video", file);
-    formData.append("height", height);
+    formData.append("height", athleteHeight);
 
     try {
       const response = await fetch("http://127.0.0.1:4000/process-video", {
@@ -61,7 +78,7 @@
 
       // Assign the processed data to a variable if needed
       processedData = data[0];
-      createThrowRecord();
+      createThrowRecord(currentAthlete);
     } catch (error) {
       console.error(error);
       alert("Error Processing Video. Please try again");
@@ -76,16 +93,23 @@
     return cm;
   }
 
-  let validFeet = false;
-  let validInches = false;
-  let validHeight = false;
-  let validName = false;
+  let inputDemo = "";
+  let currentAthlete = null;
 
-  $: validFeet = feet !== undefined && feet >= 3 && feet <= 9;
-  $: validInches = inches !== undefined && inches >= 0 && inches <= 11;
-  $: validName = qbName && qbName.length > 0;
-  $: validHeight = validFeet && validInches && validName;
-  $: height = validHeight ? parseInt(heightToCm(feet, inches)) : null;
+  const flavorOptions: AutocompleteOption<Athlete>[] = $athletes.map(
+    (athlete) => ({
+      label: `${athlete.firstName} ${athlete.lastName}`,
+      value: athlete,
+      keywords: `${athlete.firstName.toLowerCase()}, ${athlete.lastName.toLowerCase()}`,
+      meta: { healthy: true }, // Adjust as needed
+    }),
+  );
+
+  function onFlavorSelection(
+    event: CustomEvent<AutocompleteOption<string>>,
+  ): void {
+    currentAthlete = event.detail.value;
+  }
 </script>
 
 {#if !videoURL}
@@ -130,49 +154,51 @@
       buttonComplete="variant-fighost-secondary text-xl"
       buttonCompleteLabel="Analyze"
     >
-      <Step locked={!validHeight}>
-        <svelte:fragment slot="header">Enter Your Height</svelte:fragment>
+      <Step locked={false}>
+        <svelte:fragment slot="header">Choose an Athlete</svelte:fragment>
 
-        🤓 Your height will be used to calibrate the model for metrics like
-        releaseHeight
+        Who will be throwing the football in the clip?
 
         <br />
-        {#if !validHeight}
-          <span class="badge variant-ghost-warning mt-5"
-            >Please enter a valid height</span
-          >
-        {:else}
-          <span class="badge variant-ghost-success mt-5">Looks Good!</span>
-        {/if}
 
-        <div class="p-4">
-          <input
-            type="text"
-            placeholder="QB Name"
-            class="w-auto input text-center border border-gray-300 rounded mb-3"
-            bind:value={qbName}
-          />
-          <div class="flex items-center space-x-2">
-            <div class="flex items-center">
-              <input
-                class="w-20 input text-center border border-gray-300 rounded mr-1"
-                type="number"
-                placeholder="6"
-                bind:value={feet}
+        {#if currentAthlete === null}
+          <div class="text-token w-full max-w-sm space-y-2">
+            <input
+              class="input"
+              type="search"
+              name="ac-demo"
+              bind:value={inputDemo}
+              placeholder="Search..."
+            />
+            <div
+              class="card w-full max-w-sm max-h-48 p-4 overflow-y-auto"
+              tabindex="-1"
+            >
+              <Autocomplete
+                bind:input={inputDemo}
+                options={flavorOptions}
+                on:selection={onFlavorSelection}
               />
-              <div class="mr-2">ft</div>
-            </div>
-            <div class="flex items-center">
-              <input
-                class="w-20 input text-center border border-gray-300 rounded mr-1"
-                type="number"
-                placeholder="0"
-                bind:value={inches}
-              />
-              <div class="mr-2">in</div>
             </div>
           </div>
-        </div>
+        {:else}
+          <div class="w-96 p-4 variant-ghost-surface rounded-full">
+            <div class="flex items-center space-x-2 justify-start">
+              <Avatar
+                width="w-10"
+                initials={currentAthlete.initials}
+                background="bg-secondary-500/60"
+              />
+              <span class="text-xl"
+                >{currentAthlete.firstName} {currentAthlete.lastName}</span
+              >
+            </div>
+          </div>
+          <button
+            class="btn variant-ghost-error rounded-full text-sm"
+            on:click={() => (currentAthlete = null)}>Someone Else</button
+          >
+        {/if}
       </Step>
       <Step>
         <svelte:fragment slot="header">Upload a Throw</svelte:fragment>
@@ -185,7 +211,6 @@
           </div>
         {/if}
       </Step>
-      <!-- ... -->
     </Stepper>
   </div>
 {/if}

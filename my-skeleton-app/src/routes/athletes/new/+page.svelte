@@ -1,6 +1,5 @@
 <script lang="ts">
   //@ts-nocheck
-  import { Stepper, Step } from "@skeletonlabs/skeleton";
   import { athletes } from "$lib/stores";
   import { getModalStore, type ModalSettings } from "@skeletonlabs/skeleton";
   import { goto } from "$app/navigation";

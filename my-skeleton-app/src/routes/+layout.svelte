@@ -89,10 +89,11 @@
           class="btn variant-outline-secondary hover:variant-soft-secondary"
           href="/athletes">Athletes</a
         >
-        <a
+        <!-- Deprecated Route -->
+        <!-- <a
           class="btn variant-outline-secondary hover:variant-soft-secondary"
           href="/history">Throw History</a
-        >
+        > -->
         <LightSwitch />
       </svelte:fragment>
     </AppBar>
