@@ -38,25 +38,23 @@
     <!-- App Bar -->
     <AppBar>
       <svelte:fragment slot="lead">
-        <!-- <button class="md:hidden btn btn-sm mr-4" on:click={drawerOpen}>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="icon icon-tabler icon-tabler-menu"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						stroke-width="2"
-						stroke="currentColor"
-						fill="none"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						><path
-							stroke="none"
-							d="M0 0h24v24H0z"
-							fill="none"
-						/><path d="M4 8l16 0" /><path d="M4 16l16 0" /></svg
-					>
-				</button> -->
+        <button class="md:hidden btn btn-sm mr-4" on:click={drawerOpen}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-menu"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path
+              d="M4 8l16 0"
+            /><path d="M4 16l16 0" /></svg
+          >
+        </button>
 
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -77,18 +75,10 @@
         >
 
         <strong class="text-xl uppercase ml-2"> <a href="/">Optic</a></strong>
-        <span class="text-sm ml-3 variant-soft"> a sports vision company</span>
+        <span class="text-sm ml-3"> a sports vision company</span>
       </svelte:fragment>
 
       <svelte:fragment slot="trail">
-        <a
-          class="btn variant-filled-secondary hover:variant-soft-secondary"
-          href="/analyzer">Throw Analyzer</a
-        >
-        <a
-          class="btn variant-outline-secondary hover:variant-soft-secondary"
-          href="/athletes">Athletes</a
-        >
         <!-- Deprecated Route -->
         <!-- <a
           class="btn variant-outline-secondary hover:variant-soft-secondary"
@@ -99,11 +89,11 @@
     </AppBar>
   </svelte:fragment>
 
-  <!-- <svelte:fragment slot="sidebarLeft">
-		<Navigation />
-	</svelte:fragment> -->
+  <svelte:fragment slot="sidebarLeft">
+    <Navigation />
+  </svelte:fragment>
 
-  <div class="container p-10 mx-auto">
+  <div class="container p-2 mx-auto md:p-10 lg:p-10">
     <slot />
   </div>
 

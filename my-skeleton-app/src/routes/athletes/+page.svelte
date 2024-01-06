@@ -13,8 +13,12 @@
     const confirmDelete: ModalSettings = {
       type: "confirm",
       title: "Delete Athlete",
+      buttonTextConfirm: "DELETE PERMENANTLY",
       body:
-        "Are you sure you want to remove " + athleteToDelete.firstName + "?",
+        "Are you sure you want to remove " +
+        athleteToDelete.firstName +
+        "?" +
+        " This cannot be undone, all athlete throw history will also be delted",
       response: (r: boolean) => {
         if (r) {
           athletes.update((allAthletes) =>
@@ -33,6 +37,7 @@
 <div class="card p-4 h-auto h-auto">
   <div class="card-header mb-10 flex justify-between align-baseline">
     <p class="text-xl">Your Athletes</p>
+    <a href="athletes/new" class="btn variant-ghost-secondary">Add New</a>
   </div>
   <div class="card-body">
     <Accordion>
@@ -59,6 +64,7 @@
               </Tab>
               <Tab bind:group={tabSet} name="tab2" value={1}>Info</Tab>
               <Tab bind:group={tabSet} name="tab3" value={2}>Settings</Tab>
+              <Tab bind:group={tabSet} name="tab4" value={3}>Metrics</Tab>
               <!-- Tab Panels --->
               <svelte:fragment slot="panel">
                 {#if tabSet === 0}
@@ -72,7 +78,7 @@
                           >
                           <svelte:fragment slot="content">
                             <ul
-                              class="list ml-10 w-1/2 variant-soft-surface rounded-md p-4"
+                              class="list ml-4 w-full md:w-1/2 lg:w/12 variant-soft-surface rounded-md p-4"
                             >
                               <li>
                                 <span class="flex-auto">Arm Angle</span>
@@ -106,7 +112,7 @@
                   {/if}
                 {:else if tabSet === 1}
                   <ul
-                    class="list ml-5 w-1/2 variant-soft-surface rounded-md p-4"
+                    class="list ml-4 w-full md:w-1/2 lg:w/12 variant-soft-surface rounded-md p-4"
                   >
                     <li>
                       <span class="flex-auto">Height</span>
@@ -132,6 +138,12 @@
                       class="btn variant-soft-error text-sm"
                       on:click={() => deleteAthlete(athlete)}
                       >Remove Athlete</button
+                    >
+                  </div>
+                {:else if tabSet === 3}
+                  <div class="flex justify-start ml-5">
+                    <span class="badge variant-ghost-tertiary p-4 text-lg"
+                      >Coming Soon</span
                     >
                   </div>
                 {/if}
